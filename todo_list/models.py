@@ -1,9 +1,12 @@
 from django.db import models
+from django.urls import reverse
 
 
 class TagsModel(models.Model):
-    name = models.CharField(max_length=20)
+    tag_name = models.CharField(max_length=35)
 
+    def __str__(self):
+        return f"{self.tag_name}"
 
 class TaskModel(models.Model):
     content = models.CharField(max_length=255)
@@ -14,3 +17,9 @@ class TaskModel(models.Model):
         TagsModel,
         related_name="tasks"
     )
+
+    class Meta:
+        ordering = ("is_done", "-created_at", )
+
+    def get_absolute_url(self):
+        return reverse("todo_list:index")
