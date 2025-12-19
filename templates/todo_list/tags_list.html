@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Tags <a class="btn btn-primary" style="float: right" href="{% url 'todo_list:tags-create' %}">Add</a></h1>
+  {% if tags_list %}
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+    {% for tag in tags_list %}
+      <tr>
+        <td>
+          {{ tag.tag_name }}
+        </td>
+        <td>
+         <form method="post" action="{% url 'todo_list:tags-update' pk=tag.id %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-secondary px-4">
+            Update
+          </button>
+        </form>
+        </td>
+        <td>
+         <form method="post" action="{% url 'todo_list:tags-delete' pk=tag.id %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-secondary px-4">
+            Delete
+          </button>
+        </form>
+        </td>
+      </tr>
+    {% endfor %}
+    </table>
+  {% else %}
+    <p>There no literary format in list</p>
+  {% endif %}
+{% endblock %}
