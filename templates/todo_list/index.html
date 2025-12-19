@@ -37,21 +37,14 @@
           </div>
 
           <div class="text-end">
-            {% if not task.is_done %}
-              <form method="post" action="{% url 'todo_list:task-complete' task.id %}">
+              <form method="post" action="{% url 'todo_list:task-toggle' task.id %}">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-success px-4">
-                  Complete
+                <button
+                    type="submit"
+                    class="btn px-4 {% if task.is_done %}btn-secondary{% else %}btn-success{% endif %}">
+                    {% if task.is_done %}Undo{% else %}Complete{% endif %}
                 </button>
               </form>
-            {% else %}
-              <form method="post" action="{% url 'todo_list:task-not-complete' task.id %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-secondary px-4">
-                  Undo
-                </button>
-              </form>
-            {% endif %}
           </div>
         </div>
       </div>
